@@ -566,7 +566,7 @@
 <section class="sol">
   <div class="wrap">
     <div class="grid">
-      <div class="ph"><video src="assets/brand-1.mp4" poster="assets/poster-brand-1.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
+      <div class="ph"><video preload="none" src="assets/brand-1.mp4" poster="assets/poster-brand-1.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
       <div>
         <p class="eyebrow">Conheça</p><div class="rule" style="margin-left:0"></div>
         <h2>A pele de seda que faz todo mundo perguntar o que você passou.</h2>
@@ -590,10 +590,10 @@
   <div class="wrap">
     <div class="sec-head center"><p class="eyebrow">O toque</p><div class="rule"></div><h2>Pele tão lisa e perfumada que dá vontade de tocar.</h2></div>
     <div class="sgrid">
-      <div class="cell"><video src="assets/depo-1.mp4" poster="assets/poster-depo-1.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
-      <div class="cell"><video src="assets/depo-2.mp4" poster="assets/poster-depo-2.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
-      <div class="cell"><video src="assets/depo-unbox.mp4" poster="assets/poster-depo-unbox.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
-      <div class="cell"><video src="assets/hero-product.mp4" poster="assets/poster-hero.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
+      <div class="cell"><video preload="none" src="assets/depo-1.mp4" poster="assets/poster-depo-1.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
+      <div class="cell"><video preload="none" src="assets/depo-2.mp4" poster="assets/poster-depo-2.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
+      <div class="cell"><video preload="none" src="assets/depo-unbox.mp4" poster="assets/poster-depo-unbox.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
+      <div class="cell"><video preload="none" src="assets/hero-product.mp4" poster="assets/poster-hero.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
     </div>
     <p class="cap">Vídeos reais do The Perfect Body Cream — textura, aplicação e ritual.</p>
   </div>
@@ -634,9 +634,9 @@
   <div class="wrap">
     <div class="sec-head center"><p class="eyebrow">Bastidores</p><div class="rule"></div><h2>O segredo por trás da pele das famosas.</h2><p>O ritual de hidratação que conquistou influencers, famosas brasileiras e nomes internacionais — e que agora chegou até você.</p></div>
     <div class="sgrid" style="grid-template-columns:repeat(3,1fr)">
-      <div class="cell"><video src="assets/brand-2.mp4" poster="assets/poster-brand-2.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
-      <div class="cell"><video src="assets/brand-stage.mp4" poster="assets/poster-brand-stage.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
-      <div class="cell"><video src="assets/brand-3.mp4" poster="assets/poster-brand-3.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
+      <div class="cell"><video preload="none" src="assets/brand-2.mp4" poster="assets/poster-brand-2.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
+      <div class="cell"><video preload="none" src="assets/brand-stage.mp4" poster="assets/poster-brand-stage.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
+      <div class="cell"><video preload="none" src="assets/brand-3.mp4" poster="assets/poster-brand-3.jpg" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
     </div>
     <p class="cap">A pele de seda que virou obsessão nos bastidores — brasileiros e internacionais.</p>
   </div>
@@ -1029,6 +1029,18 @@
     function loop(){ show(); t1=setTimeout(loop,11000); }
     document.getElementById('spX').addEventListener('click',function(){ el.classList.remove('show'); clearTimeout(t1); clearTimeout(t2); });
     setTimeout(loop,6000);
+  })();
+  /* Vídeos leves: carregam/tocam só quando entram na tela (evita throttling no load) */
+  (function(){
+    var vids=document.querySelectorAll('video[preload="none"][autoplay]');
+    if(!('IntersectionObserver' in window)||!vids.length)return;
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ var v=e.target;
+        if(e.isIntersecting){ if(v.paused){ v.play().catch(function(){}); } }
+        else if(!v.paused){ v.pause(); }
+      });
+    },{rootMargin:'300px'});
+    vids.forEach(function(v){ io.observe(v); });
   })();
 </script>
 
