@@ -913,10 +913,7 @@
 <script>
   /* ====== CONFIGURAÇÃO (preencher antes de publicar) ====== */
   var META_PIXEL_ID = 'SEU_PIXEL_ID';            // ← ID do Pixel da Meta
-  var https://theoric.com.br/creme-1-pote = '#';                       // ← checkout 1 unidade
-  var https://theoric.com.br/creme-2-potes = '#';                       // ← checkout kit 2
-  var https://theoric.com.br/creme-3-potes = '#';                       // ← checkout kit 3 (Leve 3 Pague 2)
-  var CHECKOUTS = {https://theoric.com.br/creme-1-pote:https://theoric.com.br/creme-1-pote, https://theoric.com.br/creme-2-potes:https://theoric.com.br/creme-2-potes, https://theoric.com.br/creme-3-potes:https://theoric.com.br/creme-3-potes};
+  /* checkouts reais vêm direto do atributo data-checkout de cada kit */
 
   /* ====== META PIXEL + EVENTOS ====== */
   (function(){
@@ -938,7 +935,7 @@
   document.querySelectorAll('[data-kit]').forEach(function(btn){
     btn.addEventListener('click',function(){
       var kit=btn.getAttribute('data-kit');
-      var dest=CHECKOUTS[btn.getAttribute('data-checkout')] || '#';
+      var dest=btn.getAttribute('data-checkout') || '#';
       var val=KIT_VALUE[kit]||0;
       track('AddToCart',{content_name:'The Perfect Body Cream',content_ids:['theoric-pbc-300ml'],value:val,currency:'BRL',num_items:parseInt(kit)});
       track('InitiateCheckout',{content_ids:['theoric-pbc-300ml'],value:val,currency:'BRL',num_items:parseInt(kit)});
