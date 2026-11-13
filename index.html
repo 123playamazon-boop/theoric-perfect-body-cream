@@ -936,6 +936,8 @@
     }
   })();
   function track(ev,params){ if(window.fbq){ fbq('track',ev,params||{}); } }
+  /* Clarity: eventos próprios pra medir quem foi pro checkout, sem depender do Shopify do dono */
+  function clar(ev,tagK,tagV){ try{ if(window.clarity){ clarity('event',ev); if(tagK){ clarity('set',tagK,String(tagV)); } } }catch(e){} }
 
   /* kit → AddToCart + InitiateCheckout + redirect */
   var KIT_VALUE={1:209,2:349,3:418};
@@ -946,12 +948,13 @@
       var val=KIT_VALUE[kit]||0;
       track('AddToCart',{content_name:'The Perfect Body Cream',content_ids:['theoric-pbc-300ml'],value:val,currency:'BRL',num_items:parseInt(kit)});
       track('InitiateCheckout',{content_ids:['theoric-pbc-300ml'],value:val,currency:'BRL',num_items:parseInt(kit)});
+      clar('checkout_click','kit', kit+'-potes');
       if(dest && dest!=='#'){ window.location.href=dest; }
     });
   });
   /* CTAs âncora também disparam InitiateCheckout ao rolar pra oferta */
   document.querySelectorAll('a[href="#oferta"]').forEach(function(a){
-    a.addEventListener('click',function(){ track('InitiateCheckout',{content_ids:['theoric-pbc-300ml'],currency:'BRL'}); });
+    a.addEventListener('click',function(){ track('InitiateCheckout',{content_ids:['theoric-pbc-300ml'],currency:'BRL'}); clar('offer_view'); });
   });
 
   /* hero: botão de som (autoplay começa mudo por regra do navegador) */
