@@ -72,6 +72,9 @@
   .hero .benes{display:flex;flex-direction:column;gap:9px;margin-bottom:26px}
   .hero .benes div{font-size:14.5px;display:flex;align-items:center;gap:11px}
   .hero .benes .m{width:18px;height:1px;background:var(--brown);display:inline-block;flex:0 0 18px}
+  .offer-chip{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);font-weight:700;font-size:13.5px;letter-spacing:.02em;padding:11px 18px;border-radius:40px;margin:2px 0 18px;box-shadow:var(--shadow-sm)}
+  .offer-chip b{color:var(--sand)}
+  .offer-chip .st{color:#E4C79A}
   .rating-row{display:flex;align-items:center;gap:11px;margin-bottom:24px;flex-wrap:wrap}
   .stars{color:#C89A54;font-size:16px;letter-spacing:2px}
   .rating-row span{font-size:13.5px;color:var(--soft)}
@@ -426,7 +429,8 @@
   @media(max-width:900px){
     .hero .grid{grid-template-columns:1fr;gap:28px}
     .hero h1{font-size:42px}
-    .hero .stage{max-width:380px;width:100%;min-height:360px;margin:0 auto;order:-1}
+    .hero .stage{max-width:380px;width:100%;min-height:360px;margin:0 auto;order:0}
+    .hero .grid{gap:22px}
     .tag.t1{left:0}.tag.t2{right:0}
     .trust .wrap{grid-template-columns:repeat(2,1fr);gap:22px}
     .diff-grid{grid-template-columns:repeat(2,1fr)}
@@ -494,17 +498,17 @@
              A (vilão/inversão): O problema nunca foi a sua pele seca. Foi o hidratante que some em 1 hora.
              B (toque seco): O único creme que hidrata por 48h e seca ao toque na hora.
              C (fragrância): A pele de seda e perfumada que dura do banho até a noite. -->
-        <h1>O problema nunca foi a sua pele seca. Foi o hidratante que <em>some em 1 hora.</em></h1>
-        <p class="lead">A maioria dos cremes forma uma camada pegajosa, gruda na roupa e evapora antes do almoço. O The Perfect Body Cream faz o oposto: um <b>Véu Marinho</b> que sela a hidratação por <b>48 horas</b>, seca ao toque e deixa a pele de seda e perfumada o dia inteiro — mesmo na pele mais ressecada, mesmo depois do banho quente.</p>
+        <h1>Pele de seda que dura <em>48 horas</em> — sem grudar, sem sumir no calor.</h1>
+        <p class="lead">A maioria dos cremes forma uma camada pegajosa e evapora antes do almoço. O The Perfect Body Cream faz o oposto: um <b>Véu Marinho</b> que sela a hidratação por <b>48h</b>, absorve em segundos e perfuma do banho até a noite — mesmo na pele mais ressecada.</p>
+        <div class="offer-chip"><span class="st">★</span> Leve 3, pague 2 · <b>1 pote grátis</b> · garantia de 30 dias</div>
         <div class="benes">
           <div><span class="m"></span> Hidratação contínua por até 48 horas</div>
           <div><span class="m"></span> Toque seco — absorve e não gruda na roupa</div>
           <div><span class="m"></span> Fragrância importada de longa permanência</div>
         </div>
         <div class="rating-row"><span class="stars">★★★★★</span><span><b>5,0</b> · testado dermatologicamente</span></div>
-        <a href="#oferta" class="btn big">Quero experimentar</a>
-        <span class="btn-sub">Ritual Pele de Seda · 1 pote grátis no kit · garantia de 30 dias</span>
-        <p class="trust-inline">Compra segura · Pix, cartão e boleto · Envio para todo o Brasil</p>
+        <a href="#oferta" class="btn big">QUERO MINHA PELE DE SEDA →</a>
+        <span class="btn-sub">Ritual Pele de Seda · envio para todo o Brasil · Pix, cartão e boleto</span>
       </div>
       <div class="stage">
         <video id="heroVid" class="hero-vid" src="assets/hero-product.mp4" poster="assets/poster-hero.jpg" autoplay muted loop playsinline></video>
