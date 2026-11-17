@@ -80,6 +80,25 @@
   .kit-reassure{font-size:12px;color:var(--soft);margin:12px 0 2px;border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:3px}
   .offer-trust{max-width:820px;margin:22px auto 0;text-align:center;font-size:13.5px;color:var(--ink);background:var(--white);border:1px solid var(--line);border-radius:40px;padding:12px 20px;box-shadow:var(--shadow-sm)}
   .offer-trust .stars{color:#E4B254;letter-spacing:2px;margin-right:6px}
+  /* Teste de intenção de preço (porta de entrada) */
+  .entry-test{max-width:820px;margin:0 auto 22px;background:linear-gradient(180deg,#FFFDF9,#fff);border:2px dashed var(--brown);border-radius:14px;padding:20px 22px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+  .entry-test .et-l{flex:1;min-width:220px}
+  .entry-test .et-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--brown);padding:3px 10px;border-radius:20px;margin-bottom:8px}
+  .entry-test h4{font-size:18px;margin:0 0 4px}
+  .entry-test p{font-size:13.5px;color:var(--soft);margin:0}
+  .entry-test .et-r{text-align:center}
+  .entry-test .et-price{font-size:30px;font-weight:800;color:var(--brown2);line-height:1}
+  .entry-test .et-price small{display:block;font-size:12px;font-weight:600;color:var(--soft)}
+  .entry-test .et-btn{display:inline-block;margin-top:10px;background:var(--ink);color:#fff;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;padding:14px 26px;border-radius:4px;border:none;cursor:pointer}
+  .pt-ov{position:fixed;inset:0;z-index:1000;background:rgba(20,15,8,.62);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:22px}
+  .pt-ov.show{display:flex}
+  .pt-box{background:var(--paper);max-width:440px;width:100%;border-radius:16px;padding:34px 30px;text-align:center;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.4);border:1px solid var(--line)}
+  .pt-box .x{position:absolute;top:12px;right:16px;font-size:26px;line-height:1;color:var(--soft);background:none;border:none;cursor:pointer}
+  .pt-box h3{font-size:21px;margin:4px 0 8px}
+  .pt-box p{font-size:14px;color:var(--soft);margin:0 0 16px}
+  .pt-box input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;margin-bottom:10px;font-family:inherit}
+  .pt-box .pt-cta{width:100%;background:var(--brown);color:#fff;font-weight:700;font-size:15px;padding:14px;border:none;border-radius:8px;cursor:pointer;letter-spacing:.04em}
+  .pt-box .pt-done{color:var(--good);font-weight:700;font-size:16px;display:none;margin-top:6px}
   .rating-row{display:flex;align-items:center;gap:11px;margin-bottom:24px;flex-wrap:wrap}
   .stars{color:#C89A54;font-size:16px;letter-spacing:2px}
   .rating-row span{font-size:13.5px;color:var(--soft)}
@@ -827,6 +846,18 @@
       </div>
     </div>
 
+    <div class="entry-test">
+      <div class="et-l">
+        <span class="et-tag">Pré-venda · vagas limitadas</span>
+        <h4>Kit Experimentação — 1º pote com preço de estreia</h4>
+        <p>Primeira leva a preço de lançamento para quem quer testar antes de ir no kit completo. Estamos abrindo poucas unidades.</p>
+      </div>
+      <div class="et-r">
+        <div class="et-price">R$ 69<small>preço de estreia</small></div>
+        <button class="et-btn" id="entryBtn">QUERO ESSE →</button>
+      </div>
+    </div>
+
     <div class="kits3">
       <div class="kit3" data-kit="1" data-checkout="https://theoric.com.br/creme-1-pote">
         <div class="qt">1 unidade</div>
@@ -958,6 +989,17 @@
   function track(ev,params){ if(window.fbq){ fbq('track',ev,params||{}); } }
   /* Clarity: eventos próprios pra medir quem foi pro checkout, sem depender do Shopify do dono */
   function clar(ev,tagK,tagV){ try{ if(window.clarity){ clarity('event',ev); if(tagK){ clarity('set',tagK,String(tagV)); } } }catch(e){} }
+  /* Teste de intenção de preço: conta cliques na porta de entrada de R$69 (sem pagamento, só mede interesse) */
+  (function(){
+    var btn=document.getElementById('entryBtn'), ov=document.getElementById('ptOv');
+    if(!btn||!ov)return;
+    function close(){ ov.classList.remove('show'); }
+    btn.addEventListener('click',function(){ clar('intent_69','price_test','69'); ov.classList.add('show'); });
+    var x=document.getElementById('ptX'), c2=document.getElementById('ptClose2');
+    if(x)x.addEventListener('click',close);
+    if(c2)c2.addEventListener('click',function(){ close(); var o=document.getElementById('oferta'); if(o)o.scrollIntoView(); });
+    ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
+  })();
 
   /* kit → AddToCart + InitiateCheckout + redirect */
   var KIT_VALUE={1:209,2:349,3:418};
@@ -1073,6 +1115,16 @@
     vids.forEach(function(v){ io.observe(v); });
   })();
 </script>
+
+<!-- TESTE DE INTENÇÃO DE PREÇO — lista de espera (sem pagamento) -->
+<div class="pt-ov" id="ptOv">
+  <div class="pt-box">
+    <button class="x" id="ptX" aria-label="Fechar">×</button>
+    <h3>Pré-venda em preparação 🙌</h3>
+    <p>O Kit Experimentação a preço de estreia (R$ 69) ainda está sendo preparado — registramos o seu interesse. Enquanto isso, os kits abaixo já estão disponíveis com garantia de 30 dias. Fique de olho que a estreia abre em breve.</p>
+    <button class="pt-cta" id="ptClose2">Ver os kits disponíveis</button>
+  </div>
+</div>
 
 <!-- POP-UP DE SAÍDA -->
 <div class="exit-ov" id="exitOv">
