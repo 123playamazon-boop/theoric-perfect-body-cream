@@ -991,14 +991,17 @@
   function clar(ev,tagK,tagV){ try{ if(window.clarity){ clarity('event',ev); if(tagK){ clarity('set',tagK,String(tagV)); } } }catch(e){} }
   /* Teste de intenção de preço: conta cliques na porta de entrada de R$69 (sem pagamento, só mede interesse) */
   (function(){
-    var btn=document.getElementById('entryBtn'), ov=document.getElementById('ptOv');
-    if(!btn||!ov)return;
-    function close(){ ov.classList.remove('show'); }
-    btn.addEventListener('click',function(){ clar('intent_69','price_test','69'); ov.classList.add('show'); });
-    var x=document.getElementById('ptX'), c2=document.getElementById('ptClose2');
-    if(x)x.addEventListener('click',close);
-    if(c2)c2.addEventListener('click',function(){ close(); var o=document.getElementById('oferta'); if(o)o.scrollIntoView(); });
-    ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
+    function wire(){
+      var btn=document.getElementById('entryBtn'), ov=document.getElementById('ptOv');
+      if(!btn||!ov)return;
+      function close(){ ov.classList.remove('show'); }
+      btn.addEventListener('click',function(){ clar('intent_69','price_test','69'); ov.classList.add('show'); });
+      var x=document.getElementById('ptX'), c2=document.getElementById('ptClose2');
+      if(x)x.addEventListener('click',close);
+      if(c2)c2.addEventListener('click',function(){ close(); var o=document.getElementById('oferta'); if(o)o.scrollIntoView(); });
+      ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
+    }
+    if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',wire); } else { wire(); }
   })();
 
   /* kit → AddToCart + InitiateCheckout + redirect */
